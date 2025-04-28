@@ -9,6 +9,25 @@
 \maketitle
 
 \chapter{Minimax lowerbounds}
+\begin{definition}
+Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta, d)$ a metric space\footnote{In general $d:\Theta \times \Theta \rightarrow [0,\infty)$ is also allowed to be a semi-distance.}. Suppose that $(v_n)_{n \in \mathbb{N}}$ is a null sequence. Then, $(v_n)_{n \in \mathbb{N}}$ is called optimal (minimax) convergence rate over $\Theta$ if
+\begin{enumerate}
+    \item There exists an estimator $\hat{\vartheta}_n^{*}$ such that
+\begin{equation*}
+\limsup_{n \rightarrow \infty} v_n^{-2} \sup_{\vartheta \in \Theta} \mathbb{E}_{\vartheta, n}[d(\hat{\vartheta}_n^{*}, \vartheta)^{2}]< \infty.
+\end{equation*}
+\item We have the uniform lowerbound
+\begin{equation*}
+\liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\hat{\vartheta}_n} \sup_{\vartheta \in \Theta} \mathbb{E}_{\vartheta,n}[d(\hat{\vartheta}_{n}, \vartheta)^{2}]>0,
+\end{equation*}
+where the infimum is taken over all measurable functions (estimators) in model $n$.
+\end{enumerate}
+
+
+
+
+
+\end{definition}
 
 
 
