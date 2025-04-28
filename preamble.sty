@@ -1,0 +1,71 @@
+
+\usepackage{graphicx} % Required for inserting images
+\RequirePackage{amsmath,amsthm,amsfonts,amssymb,mathtools}
+\RequirePackage{mathrsfs}
+\RequirePackage{bbm}
+\RequirePackage{a4wide}
+\RequirePackage[numbers]{natbib}
+%\RequirePackage[authoryear]{natbib}%% uncomment this for author-year citations
+\usepackage[pdftex,dvipsnames]{xcolor} 
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\RequirePackage{cleveref} 
+\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{pdfpages}
+
+\usepackage{mdframed}
+\usepackage{lipsum}
+\usepackage{apxproof}
+
+\numberwithin{equation}{section}
+\theoremstyle{plain}
+\newtheoremrep{axiom}{Axiom}
+\newtheoremrep{claim}[axiom]{Claim}
+\newtheoremrep{theorem}{Theorem}[section]
+\newtheoremrep{lemma}[theorem]{Lemma}
+\newtheoremrep{corollary}[theorem]{Corollary}
+\newtheoremrep{proposition}[theorem]{Proposition}
+\newtheoremrep{conjecture}[theorem]{Conjecture}
+\newtheoremrep{question}[theorem]{Question}
+\usepackage{xparse}
+
+\let\marginnote\someundefinedcommand
+\usepackage{marginnote}
+\newcommand\todo[1]{\marginnote{{\color{red} \small #1}}}
+
+
+
+\def\woMR#1{\w@MR#1MR#1MR\relax}
+\def\w@MR#1MR#2MR#3\relax{#2}
+%
+% this splits MR... (...)
+\def\@MR#1 #2\relax#3{%
+    \href{https://mathscinet.ams.org/mathscinet-getitem?mr=#1}%
+    {\MRfixed{#3}}%
+    }%
+%
+\def\MRfixed{MR\woMR}
+%
+\let\MR\MRfixed
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Assumption, Definition, Example,     %%
+%% Notation, Property, Remark, Fact         %%
+%% use \theoremstyle{definition}            %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{remark}[theorem]{Remark}
+% \newtheorem{example}[theorem]{Example}
+\newtheorem{example}[theorem]{Example}
+\AtBeginEnvironment{example}{%
+  \pushQED{\qed}\renewcommand{\qedsymbol}{$\triangle$}%
+}
+\AtEndEnvironment{example}{\popQED\endexample}
+\newtheorem*{fact}{Fact}
+\newcommand{\fv}{\omega}
+
+\DeclarePairedDelimiterX{\pairing}[2]{[}{]_{1}}{#1, #2}
