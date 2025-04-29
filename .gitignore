@@ -5,3 +5,4 @@
 *.out
 main.synctex.gz
 *.bbl
+*.bak[0-9]*
