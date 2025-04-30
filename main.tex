@@ -1,16 +1,22 @@
-\documentclass{book}
+%\documentclass{book}
+\documentclass[a4paper]{article}
 \usepackage{graphicx} % Required for inserting images
 
 \usepackage{preamble}
 
 \author{Eric Ziebell}
-\title{Gaussian minimax lowerbounds}
+\title{Minimax lowerbounds}
 \begin{document}
 \maketitle
 
 %latexindent -w main.tex
-{\color{red} Warning: This document is dedigated to my personal learning process, and might contain errors.}
-\chapter{Minimax lowerbounds}
+\paragraph{General comments}
+\begin{enumerate}
+\item Warning: This document is dedicated to my personal learning process, and might contain errors.
+\item If you find any typos or errors, feel free to make a pull request or contact me directly. 
+\end{enumerate}
+\section{The essentials}
+Most of the content from this section can be found in \citet[Chapter 2]{tsybakovIntroductionNonparametricEstimation2009}.
 \begin{definition}
 	Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta, d)$ a metric space\footnote{In general $d:\Theta \times \Theta \rightarrow [0,\infty)$ is also allowed to be a semi-distance.}. Suppose that $(v_n)_{n \in \mathbb{N}}$ is a null sequence. Then, $(v_n)_{n \in \mathbb{N}}$ is called optimal (minimax) convergence rate over $\Theta$ if
 	\begin{enumerate}
@@ -27,14 +33,14 @@
 	\end{enumerate}
 \end{definition}
 
-\begin{proposition}[Reduction scheme to a testing problem]
+\begin{propositionrep}[Reduction scheme to a testing problem]
 	\label{result:reduction_scheme}
 	Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta, d)$ a metric space. Suppose that $(v_n)_{n \in \mathbb{N}}$ is a null sequence satisfying an upper bound \eqref{condition:upperbound} and
 	\begin{equation*}
-		\liminf_{n \rightarrow \infty} \inf_{\psi_n} \max_{j=1,\dots,M} \mathbb{P}_{\vartheta_j,n}(\psi_n \neq j)>0.
+		\liminf_{n \rightarrow \infty} \inf_{\psi_n} \max_{j=1,\dots,M} \mathbb{P}_{\vartheta_j,n}(\psi_n \neq j)>0,
 	\end{equation*}
-	Then, $v_n$ is the optimal minimax convergence rate over $\Theta$.
-\end{proposition}
+    for parameters $\{\vartheta_1, \dots, \vartheta_M\} \subset \Theta$ separated according to $(v_n)_{n \in \mathbb{N}}$, see \eqref{eq:seperation_condition}.	Then, $v_n$ is the optimal minimax convergence rate over $\Theta$.
+\end{propositionrep}
 \begin{proof}[Proof of \Cref{result:reduction_scheme}]
 	\begin{enumerate}
 		\item[]
@@ -51,9 +57,10 @@
 			      \liminf_{n \rightarrow \infty} \inf_{\hat{\vartheta}_n} \sup_{\vartheta \in \Theta} \alpha^{2}\mathbb{P}_{\vartheta,n}(d(\hat{\vartheta}_n, \vartheta) \geq \alpha v_n) \geq \liminf_{n \rightarrow \infty} \inf_{\hat{\vartheta}_n} \max_{j=1,\dots,M} \alpha^{2}\mathbb{P}_{\vartheta_j,n}(d(\hat{\vartheta}_n, \vartheta_j) \geq \alpha v_n).
 		      \end{equation*}
 		\item Suppose that $\{\vartheta_1, \dots, \vartheta_M\} \subset \Theta$ are seperated according to
-		      \begin{equation*}
+		      \begin{equation}
+                    \label{eq:seperation_condition}
 			      d(\vartheta_i, \vartheta_j)> 2 \alpha v_n = \gamma, \quad i \neq j, \quad i,j=1, \dots, M.
-		      \end{equation*}
+		      \end{equation}
 		      Let us now consider the minimum distance test $\psi^{*}:\mathcal{X}_n \rightarrow \{1, \dots,M\}$:
 		      \begin{equation*}
 			      \psi^{*}=\mathrm{argmin}_{k=1, \dots, M} d(\hat{\vartheta}_n, \vartheta_k).
@@ -66,8 +73,36 @@
 		      \begin{equation*}
 			      \liminf_{n \rightarrow \infty} \inf_{\hat{\vartheta}_n} \max_{j=1,\dots,M} \alpha^{2}\mathbb{P}_{\vartheta_j,n}(d(\hat{\vartheta}_n, \vartheta_j) \geq \alpha v_n) \geq \alpha^{2}  \liminf_{n \rightarrow \infty} \inf_{\psi_n} \max_{j=1,\dots,M} \mathbb{P}_{\vartheta_j,n}(\psi_n \neq j).
 		      \end{equation*}
-		      Thus, if the latter term is positive we obtain the desired lowerbound. \qedhere
+		      Thus, if the latter term is positive, we obtain the desired lower bound. \qedhere
 	\end{enumerate}
+\end{proof}
+Let us first consider the situation where we consider only two hypotheses for the reduction from \Cref{result:reduction_scheme}. 
+\begin{lemmarep}
+Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta,d)$ be a metric space. Suppose that $(v_n)_{n \in \mathbb{N}}$ is a null sequence satisfying an upper bound \eqref{condition:upperbound} and
+\begin{equation*}
+\liminf_{n \rightarrow \infty} \frac{1}{2}(1-\Vert \mathbb{P}_{\vartheta_1,n} -  \mathbb{P}_{\vartheta_1 + 2\alpha v_n, n}\Vert_{\mathrm{TV}})>0.
+\end{equation*}
+Then, $v_n$ is the optimal minimax convergence rate over $\Theta$. 
+\end{lemmarep}
+\begin{proof}
+The result follows from \Cref{result:reduction_scheme} for $M=2$, by setting $\vartheta_2=\vartheta_1 + 2 \alpha v_n$ and observing
+\begin{equation*}
+\liminf_{n\rightarrow \infty} \inf_{\psi_n} \max_{j=1,2}\mathbb{P}_{n,\vartheta_j}(\psi_n \neq j) \geq \liminf_{n\rightarrow \infty} \inf_{\psi_n} \frac{1}{2}\left(\mathbb{P}_{\vartheta_1,n}(\psi_n = 2) + \mathbb{P}_{\vartheta_2, n}(\psi_n = 1)\right),
+\end{equation*}
+where we have used that $\max(a,b) \geq \frac{1}{2}(a+b)$. By going over to the complementary event, we obtain
+\begin{equation*}
+\begin{aligned}
+&\frac{1}{2}\left(\mathbb{P}_{\vartheta_1,n}(\psi_n = 2) + \mathbb{P}_{\vartheta_2, n}(\psi_n = 1)\right) \\
+&=\frac{1}{2}\left( 1 - \mathbb{P}_{\vartheta_1,n}(\psi_n=1) + 1- \mathbb{P}_{\vartheta_2,n}(\psi_n=2)\right)\\
+&=1 - \frac{1}{2}\left(\mathbb{P}_{\vartheta_1,n}(\psi_n=1)+ \mathbb{P}_{\vartheta_2,n}(\psi_n=2)\right)\\
+&=1 - \int_{\mathcal{X}_n} \frac{1}{2}(\mathbbm{1}_{\{\psi_{n}(x)=1\}
+}p_1(x) + \mathbbm{1}_{\{\psi_{n}(x)=2\}
+}p_2(x) ) \mathrm{d}\mu(x)\\
+&\geq 1 - \frac{1}{2}\int_{\mathcal{X}_n} \max(p_0(x), p_1(x))\mathrm{d}\mu(x). \\
+&= \frac{1}{2}(1-\Vert \mathbb{P}_{\vartheta_1,n} -  \mathbb{P}_{\vartheta_1 + 2\alpha v_n, n}\Vert_{\mathrm{TV}}),
+\end{aligned}
+\end{equation*}
+concluding the proof. 
 \end{proof}
 
 
