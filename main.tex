@@ -104,7 +104,16 @@ where we have used that $\max(a,b) \geq \frac{1}{2}(a+b)$. By going over to the 
 \end{equation*}
 concluding the proof. 
 \end{proof}
+Now it is important to note that usually it does not matter which $f$-divergence we take here. To see this, we require a slight generalisation of \Cref{result:reduction_scheme}. (The original result is recovered by setting $\tilde{\Theta}=\{\vartheta_1, \dots, \vartheta_M\}$ and $\pi$ as the discrete uniform.)
+\begin{lemmarep}
+Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta,d)$ a metric space. Suppose $\tilde{\Theta}\subset \Theta$ and $((\tilde{\Theta},d), \Pi, \pi)$ is a polish space. Then, the minimax risk is lower bounded by the Bayes risk according to $\pi$:
+\begin{equation*}
+\liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\hat{\vartheta}_n} \sup_{\vartheta \in \Theta} \mathbb{E}_{\vartheta,n}[d(\hat{\vartheta}_{n}, \vartheta)^{2}] \geq \liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\psi_n} \int_{\tilde{\Theta}} \mathbb{P}_{\vartheta}(\psi_n \neq \vartheta) \mathrm{d}\pi(\vartheta).
+\end{equation*}
+\end{lemmarep}
+\begin{proof}
 
+\end{proof}
 
 
 
