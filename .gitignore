@@ -6,3 +6,5 @@
 main.synctex.gz
 *.bbl
 *.bak[0-9]*
+*.fdb_latexmk
+*.fls
