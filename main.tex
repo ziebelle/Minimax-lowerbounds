@@ -14,9 +14,9 @@
 \begin{enumerate}
 \item Warning: This document is dedicated to my personal learning process, and might contain errors.
 \item If you find any typos or errors, feel free to make a pull request or contact me directly. 
+\item If you would simply like to contribute, please reach out as well. 
 \end{enumerate}
 \section{The essentials}
-Most of the content from this section can be found in \citet[Chapter 2]{tsybakovIntroductionNonparametricEstimation2009}.
 \begin{definition}
 	Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta, d)$ a metric space\footnote{In general $d:\Theta \times \Theta \rightarrow [0,\infty)$ is also allowed to be a semi-distance.}. Suppose that $(v_n)_{n \in \mathbb{N}}$ is a null sequence. Then, $(v_n)_{n \in \mathbb{N}}$ is called optimal (minimax) convergence rate over $\Theta$ if
 	\begin{enumerate}
@@ -32,7 +32,7 @@ Most of the content from this section can be found in \citet[Chapter 2]{tsybakov
 		      where the infimum is taken over all measurable functions (estimators) in model $n$.
 	\end{enumerate}
 \end{definition}
-
+The following reduction scheme can, for instance, be found in \citet[Chapter 2]{tsybakovIntroductionNonparametricEstimation2009}.
 \begin{propositionrep}[Reduction scheme to a testing problem]
 	\label{result:reduction_scheme}
 	Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta, d)$ a metric space. Suppose that $(v_n)_{n \in \mathbb{N}}$ is a null sequence satisfying an upper bound \eqref{condition:upperbound} and
@@ -78,6 +78,7 @@ Most of the content from this section can be found in \citet[Chapter 2]{tsybakov
 \end{proof}
 Let us first consider the situation where we consider only two hypotheses for the reduction from \Cref{result:reduction_scheme}. 
 \begin{lemmarep}
+\label{result:tv_lowerbound}
 Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta,d)$ be a metric space. Suppose that $(v_n)_{n \in \mathbb{N}}$ is a null sequence satisfying an upper bound \eqref{condition:upperbound} and
 \begin{equation*}
 \liminf_{n \rightarrow \infty} \frac{1}{2}(1-\Vert \mathbb{P}_{\vartheta_1,n} -  \mathbb{P}_{\vartheta_1 + 2\alpha v_n, n}\Vert_{\mathrm{TV}})>0.
@@ -104,16 +105,26 @@ where we have used that $\max(a,b) \geq \frac{1}{2}(a+b)$. By going over to the 
 \end{equation*}
 concluding the proof. 
 \end{proof}
-Now it is important to note that usually it does not matter which $f$-divergence we take here. To see this, we require a slight generalisation of \Cref{result:reduction_scheme}. (The original result is recovered by setting $\tilde{\Theta}=\{\vartheta_1, \dots, \vartheta_M\}$ and $\pi$ as the discrete uniform.)
-\begin{lemmarep}
-Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta,d)$ a metric space. Suppose $\tilde{\Theta}\subset \Theta$ and $((\tilde{\Theta},d), \Pi, \pi)$ is a polish space. Then, the minimax risk is lower bounded by the Bayes risk according to $\pi$:
+Now it is important to note that usually it does not matter which $f$-divergence we take here. To see this, we require a slight generalisation of \Cref{result:reduction_scheme}. (The original result is recovered by setting $\tilde{\Theta}=\{\vartheta_1, \dots, \vartheta_M\}$ and $\pi$ as the discrete uniform. Note also that many ideas from the proof of \Cref{result:reduction_scheme} and \Cref{result:tv_lowerbound} are also visible in this result.) 
+\begin{propositionrep}
+Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta,d)$ a metric space. Suppose $\tilde{\Theta}\subset \Theta$ and $((\tilde{\Theta},d), \Pi, \pi)$ is a polish space.\todo{Potentially make a statistical model assumption at the beginning somewhere.} Then, the minimax risk is lower bounded by the Bayes risk according to $\pi$:
 \begin{equation*}
-\liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\hat{\vartheta}_n} \sup_{\vartheta \in \Theta} \mathbb{E}_{\vartheta,n}[d(\hat{\vartheta}_{n}, \vartheta)^{2}] \geq \liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\psi_n} \int_{\tilde{\Theta}} \mathbb{P}_{\vartheta}(\psi_n \neq \vartheta) \mathrm{d}\pi(\vartheta).
+\begin{aligned}
+\liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\hat{\vartheta}_n} \sup_{\vartheta \in \Theta} \mathbb{E}_{\vartheta,n}[d(\hat{\vartheta}_{n}, \vartheta)^{2}] &\geq \liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\psi_n} \int_{\tilde{\Theta}} \mathbb{P}_{\vartheta}(\psi_n \neq \vartheta) \mathrm{d}\pi(\vartheta)\\
+&=1-\int_{\mathcal{X}}\max_{\vartheta \in \tilde{\Theta}} (\pi(\vartheta)p_{\vartheta}(x))\mathrm{d}\mu(x). 
+\end{aligned}
+\end{equation*}\todo{Check if later formulation is also true if $\pi$ is non-discrete.}
+\end{propositionrep}
+\todo{Add a proof.}
+\begin{definition}
+For a convex function $f:[0,\infty) \rightarrow \mathbb{R}$ satisfying $f(1)=0$ the $f$-divergence between two probability measures $P$ and $Q$ is given by
+\begin{equation*}
+D_f(P | Q) \coloneqq \int f \left(\frac{\mathrm{d}P}{\mathrm{d}Q}\right)\mathrm{d}Q,
 \end{equation*}
-\end{lemmarep}
-\begin{proof}
+provided that $P$ is absolutely continuous with respect to $Q$ and $\infty$ otherwise. 
+\end{definition}
 
-\end{proof}
+
 
 
 
