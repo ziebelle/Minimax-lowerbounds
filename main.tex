@@ -105,28 +105,54 @@ where we have used that $\max(a,b) \geq \frac{1}{2}(a+b)$. By going over to the 
 \end{equation*}
 concluding the proof. 
 \end{proof}
-Now it is important to note that usually it does not matter which $f$-divergence we take here. To see this, we require a slight generalisation of \Cref{result:reduction_scheme}. (The original result is recovered by setting $\tilde{\Theta}=\{\vartheta_1, \dots, \vartheta_M\}$ and $\pi$ as the discrete uniform. Note also that many ideas from the proof of \Cref{result:reduction_scheme} and \Cref{result:tv_lowerbound} are also visible in this result.) 
-\begin{propositionrep}
-Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta,d)$ a metric space. Suppose $\tilde{\Theta}\subset \Theta$ and $((\tilde{\Theta},d), \Pi, \pi)$ is a polish space.\todo{Potentially make a statistical model assumption at the beginning somewhere.} Then, the minimax risk is lower bounded by the Bayes risk according to $\pi$:
-\begin{equation*}
-\begin{aligned}
-\liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\hat{\vartheta}_n} \sup_{\vartheta \in \Theta} \mathbb{E}_{\vartheta,n}[d(\hat{\vartheta}_{n}, \vartheta)^{2}] &\geq \liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\psi_n} \int_{\tilde{\Theta}} \mathbb{P}_{\vartheta}(\psi_n \neq \vartheta) \mathrm{d}\pi(\vartheta)\\
-&=1-\int_{\mathcal{X}}\max_{\vartheta \in \tilde{\Theta}} (\pi(\vartheta)p_{\vartheta}(x))\mathrm{d}\mu(x). 
-\end{aligned}
-\end{equation*}\todo{Check if later formulation is also true if $\pi$ is non-discrete.}
-\end{propositionrep}
-\todo{Add a proof.}
 \begin{definition}
-For a convex function $f:[0,\infty) \rightarrow \mathbb{R}$ satisfying $f(1)=0$ the $f$-divergence between two probability measures $P$ and $Q$ is given by
+\label{definition:f_divergence}
+\begin{enumerate}
+\item[]
+\item \textit{$f$-divergence}: For a convex function $f:[0,\infty) \rightarrow \mathbb{R}$ satisfying $f(1)=0$ the $f$-divergence between two probability measures $P$ and $Q$ is given by
 \begin{equation*}
 D_f(P | Q) \coloneqq \int f \left(\frac{\mathrm{d}P}{\mathrm{d}Q}\right)\mathrm{d}Q,
 \end{equation*}
-provided that $P$ is absolutely continuous with respect to $Q$ and $\infty$ otherwise. 
+provided that $P$ is absolutely continuous with respect to $Q$ and $\infty$ otherwise.
+\item \textit{$f$-spread}: Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model. Suppose that $f$ induces a $f$-divergence. Then, we call 
+\begin{equation}
+\label{eq:f_spread}
+\mathcal{J}_f(\Theta, n) \coloneqq \inf_{Q} \sum_{\vartheta \in \Theta} D_{f}(P_{\vartheta}|Q),
+\end{equation}
+the $f$-spread over $\Theta$.\footnote{Note that in this definition it might also be sensible to additionally normalize by $|\Theta|$.}
+\end{enumerate}
 \end{definition}
-The following result provides a lowerbound for the minimax risk, based on an $f$-divergence and is proven in \cite[II.2]{guntuboyinaLowerBoundsMinimax2011}.
+Now it is important to note that usually it does not matter which $f$-divergence we take here. To see this, we require a slight generalisation of \Cref{result:reduction_scheme}. (The original result is recovered by setting $\tilde{\Theta}=\{\vartheta_1, \dots, \vartheta_M\}$ and $\pi$ as the discrete uniform. Note also that many ideas from the proof of \Cref{result:reduction_scheme} and \Cref{result:tv_lowerbound} are also visible in this result.) The following result provides a lowerbound for the minimax risk, based on an $f$-divergence and is proven in \cite[II.2]{guntuboyinaLowerBoundsMinimax2011}.
 \begin{proposition}
-
+Let $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \Theta})$ be a statistical model and $(\Theta,d)$ a metric space. Suppose $\tilde{\Theta}\subset \Theta$ and $((\tilde{\Theta},d), \Pi, \pi)$ is a polish space. Then, we have
+\begin{enumerate}
+\item Then, the minimax risk is lower bounded by the Bayes risk according to $\pi$:
+\begin{equation*}
+\begin{aligned}
+\liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\hat{\vartheta}_n} \sup_{\vartheta \in \Theta} \mathbb{E}_{\vartheta,n}[d(\hat{\vartheta}_{n}, \vartheta)^{2}] &\geq \liminf_{n \rightarrow \infty} v_n^{-2} \inf_{\psi_n} \int_{\tilde{\Theta}} \mathbb{P}_{\vartheta, n}(\psi_n \neq \vartheta) \mathrm{d}\pi(\vartheta)\\
+&=\liminf_{n \rightarrow \infty} \left(1-\int_{\mathcal{X}}\max_{\vartheta \in \tilde{\Theta}} (\pi(\vartheta)p_{\vartheta, n}(x))\mathrm{d}\mu(x) \right). 
+\end{aligned}
+\end{equation*}
+\item Suppose that $|\tilde{\Theta}|< \infty$ \todo{what happens if we allow $|\tilde{\Theta}|=\infty$?} and $f:[0,\infty) \rightarrow \mathbb{R}$ induces and $f$-divergence according to \Cref{definition:f_divergence}. If $f$ is differentiable, we have for every $a \in [0, 1- 1/|\tilde{\Theta}|]$ a lowerbound for the minimax risk, based on the $f$-spread within the (reduced) statistical model $(\mathcal{X}_n, \mathcal{F}_n, (\mathbb{P}_{\vartheta,n})_{\vartheta \in \tilde{\Theta}})$:
+\begin{equation*}
+\liminf_{n \rightarrow \infty} \left(1-\int_{\mathcal{X}}\max_{\vartheta \in \tilde{\Theta}} (\pi(\vartheta)p_{\vartheta, n}(x))\mathrm{d}\mu(x) \right) \geq \liminf_{n \rightarrow \infty} \left(a + \frac{\mathcal{J}_f(\tilde{\Theta},n)-g_{\tilde{\Theta}}(a)}{g_{\tilde{\Theta}}'(a)}\right),
+\end{equation*}
+with 
+\begin{equation*}
+g(a)=f(|\tilde{\Theta}|(1-a))+ (|\tilde{\Theta}|-1)f\left(\frac{\tilde{\Theta}a}{|\tilde{\Theta}-1|}\right),
+\end{equation*}
+and $\mathcal{J}_f(\tilde{\Theta},n)$ defined according to \eqref{eq:f_spread}. 
+\end{enumerate}
 \end{proposition}
+\begin{remark}
+\begin{enumerate}
+\item[]
+\item Usually, the $f$-spread $\mathcal{J}_{f}$ cannot be computed exactly and also needs to be bounded. 
+\item If $\tilde{\Theta}=\{1,2\}$, we have $\mathcal{J}_f(\{1,2\}, n) \geq f(1 + \Vert P_{1,n}-P_{2,n} \Vert_{\mathrm{TV}}) + f(1 - \Vert P_{1,n}-P_{2,n} \Vert_{\mathrm{TV}})$.
+\end{enumerate}
+\end{remark}
+
+
 
 
 
